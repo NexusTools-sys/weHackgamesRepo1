@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Hack Games - Game Leaks</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            overflow-x: hidden;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 50px;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto 1fr auto;
+            gap: 40px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .title {
+            font-size: 4.5rem;
+            color: #FF6F61;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.7);
+            animation: float 3s ease-in-out infinite;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 4px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            background-color: #444;
+            color: #fff;
+            border: none;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .tab-button:hover {
+            background-color: #666;
+            transform: translateY(-5px);
+        }
+
+        .tab-button.active {
+            background-color: #FF6F61;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .leak-info {
+            margin-bottom: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .leak-info p {
+            font-size: 1.2rem;
+            font-family: 'Roboto', sans-serif;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            animation: slideIn 1.5s ease-out;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .grid-item {
+            padding: 30px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        .grid-item.playfab {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.8), rgba(255, 69, 0, 0.8));
+        }
+
+        .grid-item.photon {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.8), rgba(0, 191, 255, 0.8));
+        }
+
+        .grid-item h2 {
+            font-size: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            margin-bottom: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .section h3:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            transform: translateX(5px);
+        }
+
+        .section-content {
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            display: none;
+            overflow-x: auto;
+        }
+
+        .section-content pre {
+            font-size: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            color: #f8f8f2;
+            background-color: transparent;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #FF6F61;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 3s ease-in-out;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .footer a {
+            color: #FFA500;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-shadow: 0 0 10px #FFA500, 0 0 20px #FFA500, 0 0 30px #FFA500;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes highlight {
+            from { background-color: rgba(255, 165, 0, 0.1); }
+            to { background-color: rgba(255, 165, 0, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">We Hack Games</h1>
+            <p class="subtitle">Currently, the only leaks are for Silly Sircles, Douc R, and Zuse Runners. Email us to request more!</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'silly-sircles')">Silly Sircles</button>
+            <button class="tab-button" onclick="openTab(event, 'douc-r')">Douc R</button>
+            <button class="tab-button" onclick="openTab(event, 'zuse-runners')">Zuse Runners</button>
+        </div>
+
+        <!-- Silly Sircles Tab -->
+        <div id="silly-sircles" class="tab-content active">
+            <div class="leak-info">
+                <p><strong>Reason for the leak:</strong> Silly Sircles got leaked because the owner defends pedophiles and drug addicts.</p>
+            </div>
+            <div class="grid-container">
+                <div class="grid-item playfab">
+                    <h2>Silly Sircles Leaks (PlayFab)</h2>
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Basic Information</h3>
+                        <div class="section-content">
+                            <pre>{
+    "m_Name": "PlayFabSharedSettings",
+    "m_Structure": {
+        "TitleId": "65AFA",
+        "RequestTimeout": 2000,
+        "RequestKeepAlive": true,
+        "LogLevel": 12,
+        "LogCapLimit": 30
+    }
+}</pre>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Advanced Settings</h3>
+                        <div class="section-content">
+                            <pre>{
+    "DisableDeviceInfo": false,
+    "DisableFocusTimeCollection": false,
+    "CompressResponses": false,
+    "DecompressWithDownloadHandler": true,
+    "EnableRealTimeLogging": false
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-item photon">
+                    <h2>Silly Sircles Leaks (Photon)</h2>
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Application Settings</h3>
+                        <div class="section-content">
+                            <pre>{
+    "AppSettings": {
+        "AppIdRealtime": "efefe85c-98ed-4152-9e95-b8311f574095",
+        "UseNameServer": true,
+        "FixedRegion": "eu",
+        "EnableProtocolFallback": true,
+        "NetworkLogging": 1
+    }
+}</pre>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">RPC List</h3>
+                        <div class="section-content">
+                            <pre>[
+    "CantHearYou",
+    "ChangeColour",
+    "ClickRpc",
+    "DestroyRpc",
+    "Fire",
+    "KickPlayer",
+    "PlayHitSound"
+]</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Douc R Tab -->
+        <div id="douc-r" class="tab-content">
+            <div class="leak-info">
+                <p><strong>Reason for the leak:</strong> Douc R got leaked because the owner said that his game was unhackable and everyone was weak.</p>
+            </div>
+            <div class="grid-container">
+                <div class="grid-item playfab">
+                    <h2>Douc R Leaks (PlayFab)</h2>
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Title ID</h3>
+                        <div class="section-content">
+                            <pre>{
+    "TitleId": "B7D51"
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-item photon">
+                    <h2>Douc R Leaks (Photon)</h2>
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Application Settings</h3>
+                        <div class="section-content">
+                            <pre>{
+    "AppIdRealtime": "6ecdafde-9c53-4861-9439-3b6b4669c5f6",
+    "AppIdVoice": "c5aa2a95-0b63-4a3b-a308-da8ba2ba43c8",
+    "FixedRegion": "eu"
+}</pre>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">RPC List</h3>
+                        <div class="section-content">
+                            <pre>[
+    "CantHearYou",
+    "ChangeColour",
+    "ClickRpc",
+    "DestroyRpc",
+    "HeresWhy",
+    "DestroySpaceship",
+    "Fire",
+    "RespawnSpaceship",
+    "RPCRefreshPlayerValues",
+    "PlaySound",
+    "ResetGame",
+    "ResetValues",
+    "TagPlayer",
+    "TagPlayerJoin",
+    "TagPlayerSTART",
+    "SyncLavaRiseState",
+    "ReleaseTether",
+    "TetherToPlayer"
+]</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zuse Runners Tab -->
+        <div id="zuse-runners" class="tab-content">
+            <div class="leak-info">
+                <p><strong>Reason for the leak:</strong> Zuse Runners got leaked because they only got their fame by using others for shoutouts and promo, and the game is ass.</p>
+            </div>
+            <div class="grid-container">
+                <div class="grid-item playfab">
+                    <h2>Zuse Runners Leaks (PlayFab)</h2>
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Title ID</h3>
+                        <div class="section-content">
+                            <pre>{
+    "TitleId": "3922E"
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-item photon">
+                    <h2>Zuse Runners Leaks (Photon)</h2>
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">Application Settings</h3>
+                        <div class="section-content">
+                            <pre>{
+    "AppIdRealtime": "62575cb0-f9cd-4e8d-a031-228b84668708",
+    "AppIdVoice": "a8fb49f4-efc5-4dce-8b6e-c78247f40de1",
+    "Region": "US"
+}</pre>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 onclick="toggleSection(this)">RPC List</h3>
+                        <div class="section-content">
+                            <pre>[
+    "CantHearYou",
+    "ChangeColour",
+    "ClickRpc",
+    "DestroyRpc",
+    "DestroySpaceship",
+    "Fire",
+    "AssignTagger"
+]</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Contact <a href="mailto:gnuexhort2020@gmail.com">gnuexhort2020@gmail.com</a> to request more game leaks.</p>
+        </footer>
+    </div>
+
+    <audio id="backgroundMusic" src="goofy.mp3" autoplay loop></audio>
+
+    <script>
+        function openTab(event, tabId) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => button.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            backgroundMusic.play().catch(() => {
+                document.addEventListener('click', () => backgroundMusic.play(), { once: true });
+            });
+        });
+    </script>
+</body>
+</html>
